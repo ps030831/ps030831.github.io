@@ -1,0 +1,1540 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preet Sadhwani •  Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --color-bg: #0F0F0F;
+      --color-surface: #1A1A1A;
+      --color-text: #F5F5F5;
+      --color-accent: #C9A961;
+      --color-accent-secondary: #8B7355;
+      --color-block-teal: #2D5F5D;
+      --color-block-burgundy: #6B2D3E;
+      --color-block-navy: #1E3A5F;
+      --color-block-charcoal: #2A2A2A;
+      --color-muted: #A0A0A0;
+      --color-skills-band: #1A1A1A;
+    }
+    
+    /* Sticky Navigation Bar */
+    .nav-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(15, 15, 15, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(201, 169, 97, 0.15);
+      transition: all 0.3s ease;
+    }
+    
+    .nav-bar.scrolled {
+      box-shadow: 0 4px 30px rgba(201, 169, 97, 0.2);
+      border-bottom-color: rgba(201, 169, 97, 0.3);
+    }
+    
+    .nav-link {
+      position: relative;
+      transition: all 0.3s ease;
+      padding-bottom: 4px;
+    }
+    
+    .nav-link:hover {
+      color: var(--color-accent);
+    }
+    
+    .nav-link.active {
+      color: var(--color-accent);
+      font-weight: 500;
+    }
+    
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--color-accent);
+    }
+    
+    /* Offset for sticky nav */
+    .section-offset {
+      scroll-margin-top: 80px;
+    }
+    
+    .font-display {
+      font-family: 'Playfair Display', Georgia, serif;
+      letter-spacing: -0.02em;
+    }
+    
+    .font-body {
+      font-family: 'Montserrat', -apple-system, sans-serif;
+      letter-spacing: 0.01em;
+    }
+    
+    /* Horizontal timeline scroll */
+    .timeline-scroll {
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-accent) var(--color-surface);
+    }
+    
+    .timeline-scroll::-webkit-scrollbar {
+      height: 6px;
+    }
+    
+    .timeline-scroll::-webkit-scrollbar-track {
+      background: var(--color-surface);
+      border-radius: 3px;
+    }
+    
+    .timeline-scroll::-webkit-scrollbar-thumb {
+      background: var(--color-accent);
+      border-radius: 3px;
+    }
+    
+    /* Vertical timeline - continuous and staggered */
+    .vertical-timeline {
+      position: relative;
+      padding: 0;
+    }
+    
+    .vertical-timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--color-accent);
+      opacity: 0.4;
+    }
+    
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 18px;
+      background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-secondary) 100%);
+      border: 4px solid var(--color-bg);
+      border-radius: 50%;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(44, 95, 141, 0.6), 0 0 20px rgba(74, 123, 167, 0.4);
+      pointer-events: none;
+    }
+    
+    .experience-card {
+      position: relative;
+      z-index: 20;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      background: transparent;
+    }
+    
+    .experience-card:hover {
+      cursor: pointer;
+    }
+    
+    .experience-card:hover {
+      background: rgba(201, 169, 97, 0.08);
+    }
+    
+    .experience-card.expanded {
+      background: rgba(201, 169, 97, 0.12);
+      border: 1px solid rgba(201, 169, 97, 0.3);
+    }
+    
+    .view-details-btn {
+      position: relative;
+      z-index: 30;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    
+    /* Project blocks - large featured style */
+    .project-block {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 3rem;
+      border-radius: 16px;
+    }
+    
+    .project-block:hover {
+      transform: translateX(8px);
+      box-shadow: 0 8px 30px rgba(201, 169, 97, 0.3);
+    }
+    
+    .project-block.align-right {
+      margin-left: auto;
+    }
+    
+    .project-block.align-right:hover {
+      transform: translateX(-8px);
+    }
+    
+    .key-insight-box {
+      background: linear-gradient(135deg, rgba(201, 169, 97, 0.2) 0%, rgba(139, 115, 85, 0.1) 100%);
+      border-left: 4px solid var(--color-accent);
+    }
+    
+    /* Testimonial blocks */
+    .testimonial-block {
+      padding: 2.5rem;
+      border-radius: 16px;
+      transition: transform 0.3s ease;
+    }
+    
+    .testimonial-block:hover {
+      transform: translateY(-4px);
+    }
+    
+    /* Skills grid */
+    .skills-column h4 {
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    
+    /* Quote styling - warmer */
+    .testimonial-quote {
+      position: relative;
+      padding-left: 2.5rem;
+    }
+    
+    .testimonial-quote::before {
+      content: '"';
+      position: absolute;
+      left: 0;
+      top: -1rem;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 5rem;
+      line-height: 1;
+      color: var(--color-accent);
+      opacity: 0.35;
+      font-weight: 600;
+    }
+    
+    /* Smooth section transitions */
+    section {
+      scroll-margin-top: 2rem;
+    }
+    
+    /* Photo placeholder styles */
+    .photo-frame {
+      background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid;
+      border-image: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-secondary) 100%) 1;
+      box-shadow: 0 8px 32px rgba(201, 169, 97, 0.3), 0 0 60px rgba(201, 169, 97, 0.15);
+      transition: all 0.4s ease;
+    }
+    
+    .photo-frame:hover {
+      border-image: linear-gradient(135deg, var(--color-accent-secondary) 0%, var(--color-accent) 100%) 1;
+      box-shadow: 0 12px 48px rgba(201, 169, 97, 0.4), 0 0 80px rgba(201, 169, 97, 0.25);
+      transform: translateY(-4px);
+    }
+    
+    .photo-frame::before {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      right: -40px;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(201, 169, 97, 0.2) 0%, transparent 70%);
+      opacity: 0.8;
+      border-radius: 50%;
+      z-index: 0;
+    }
+    
+    .photo-frame::after {
+      content: '';
+      position: absolute;
+      top: -40px;
+      left: -40px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(139, 115, 85, 0.15) 0%, transparent 70%);
+      opacity: 0.6;
+      border-radius: 50%;
+      z-index: 0;
+    }
+    
+    .photo-accent-line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-accent-secondary) 50%, var(--color-accent-tertiary) 100%);
+      z-index: 2;
+    }
+    
+    /* Photo image styles */
+    .photo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .photo-placeholder {
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* Fade in animation */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-fade-up {
+      animation: fadeUp 0.8s ease-out forwards;
+    }
+    
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    
+    /* Section headers - larger and more confident */
+    .section-header {
+      font-size: 3.5rem;
+      line-height: 1.1;
+      color: var(--color-text);
+    }
+    
+    @media (min-width: 768px) {
+      .section-header {
+        font-size: 4.5rem;
+      }
+    }
+    
+    /* Warmer body text sizing */
+    body {
+      font-size: 16px;
+      line-height: 1.8;
+      font-weight: 400;
+    }
+    
+    @media (min-width: 768px) {
+      body {
+        font-size: 17px;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full font-body" style="background-color: var(--color-bg); color: var(--color-text);"><!-- Sticky Navigation Bar -->
+  <nav class="nav-bar">
+   <div class="max-w-6xl mx-auto px-6 md:px-16">
+    <div class="flex items-center justify-between h-16"><!-- Logo/Name --> <a href="#home" class="font-display text-xl font-medium" style="color: var(--color-text);"> PS </a> <!-- Nav Links -->
+     <div class="hidden md:flex items-center gap-8 text-sm"><a href="#home" class="nav-link" data-section="home" style="color: var(--color-muted);">Home</a> <a href="#journey" class="nav-link" data-section="journey" style="color: var(--color-muted);">Journey</a> <a href="#experience" class="nav-link" data-section="experience" style="color: var(--color-muted);">Experience</a> <a href="#projects" class="nav-link" data-section="projects" style="color: var(--color-muted);">Projects</a> <a href="#skills" class="nav-link" data-section="skills" style="color: var(--color-muted);">Skills</a> <a href="#awards" class="nav-link" data-section="awards" style="color: var(--color-muted);">Awards</a> <a href="#contact" class="nav-link" data-section="contact" style="color: var(--color-muted);">Get in Touch</a>
+     </div><!-- Mobile menu button --> <button class="md:hidden p-2" onclick="toggleMobileMenu()" style="color: var(--color-text);">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg></button>
+    </div><!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden pb-4">
+     <div class="flex flex-col gap-3 text-sm"><a href="#home" class="nav-link" data-section="home" style="color: var(--color-muted);">Home</a> <a href="#journey" class="nav-link" data-section="journey" style="color: var(--color-muted);">Journey</a> <a href="#experience" class="nav-link" data-section="experience" style="color: var(--color-muted);">Experience</a> <a href="#projects" class="nav-link" data-section="projects" style="color: var(--color-muted);">Projects</a> <a href="#skills" class="nav-link" data-section="skills" style="color: var(--color-muted);">Skills</a> <a href="#awards" class="nav-link" data-section="awards" style="color: var(--color-muted);">Awards</a> <a href="#contact" class="nav-link" data-section="contact" style="color: var(--color-muted);">Get in Touch</a>
+     </div>
+    </div>
+   </div>
+  </nav>
+  <div class="h-full overflow-auto" style="padding-top: 64px;"><!-- SECTION 1: HOME -->
+   <section id="home" class="section-offset min-h-full flex flex-col justify-center px-6 md:px-16 lg:px-24 py-20">
+    <div class="max-w-5xl mx-auto w-full">
+     <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16"><!-- Left: Text Content -->
+      <div class="flex-1 order-2 md:order-1"><!-- Name -->
+       <h1 id="hero-name" class="font-display text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight animate-fade-up" style="color: var(--color-text);">Preet Sadhwani</h1><!-- Subtitle -->
+       <p id="hero-subtitle" class="font-display text-xl md:text-2xl mt-4 tracking-wide animate-fade-up delay-100" style="color: var(--color-accent);">Data · Product · Strategy</p><!-- Positioning Statement -->
+       <p id="positioning-statement" class="font-body text-base md:text-lg mt-10 leading-relaxed animate-fade-up delay-200" style="color: var(--color-text); opacity: 0.85;">I like figuring out why things work, and what to do once you know.</p>
+       <p class="font-body text-base md:text-lg mt-6 leading-relaxed animate-fade-up delay-200" style="color: var(--color-text); opacity: 0.85;">I use <strong style="color: var(--color-accent);">Data</strong> to ask better questions, <strong style="color: var(--color-accent);">Product Thinking</strong> to shape direction, and <strong style="color: var(--color-accent);">Strategy</strong> to decide what actually matters.</p><!-- Contact & Location -->
+       <div class="mt-12 flex flex-wrap items-center gap-6 text-sm animate-fade-up delay-300" style="color: var(--color-muted);"><span id="location" class="flex items-center gap-2">
+         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+         </svg> Los Angeles, CA </span> <a id="linkedin-link" href="https://linkedin.com/in/preetsadhwani" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:opacity-70 transition-opacity">
+         <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+         </svg> LinkedIn </a> <a id="email-link" href="mailto:preet@usc.edu" class="flex items-center gap-2 hover:opacity-70 transition-opacity">
+         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+         </svg> Email </a>
+       </div><!-- Scroll indicator -->
+       <div class="mt-16 animate-fade-up delay-400"><button onclick="document.getElementById('journey').scrollIntoView({behavior: 'smooth'})" class="flex items-center gap-2 text-xs uppercase tracking-widest hover:opacity-70 transition-opacity" style="color: var(--color-muted);"> <span>Scroll to explore</span>
+         <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+         </svg></button>
+       </div>
+      </div><!-- Right: Photo -->
+      <div class="flex-shrink-0 order-1 md:order-2 animate-fade-up">
+       <div id="home-photo-container" class="photo-frame w-64 h-80 md:w-72 md:h-96 rounded-2xl overflow-hidden relative"><img src="https://lh3.googleusercontent.com/d/1pzxl09dhInaK_VYtjVTzeScYnXtXZOVX" alt="Preet Sadhwani" class="w-full h-full object-cover relative z-10" loading="lazy">
+        <div class="photo-accent-line"></div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- SECTION 2: JOURNEY (Horizontal Timeline) -->
+   <section id="journey" class="section-offset py-20 px-6 md:px-16">
+    <div class="max-w-6xl mx-auto"><!-- Section Header -->
+     <div class="mb-16">
+      <h2 class="font-display section-header font-medium">The Journey</h2>
+      <p class="font-body text-sm mt-3 uppercase tracking-widest" style="color: var(--color-muted);">How I got here</p>
+     </div><!-- Horizontal Timeline Container -->
+     <div class="relative"><!-- Timeline Line with Color Blocks -->
+      <div class="absolute top-32 left-0 right-0 h-0.5" style="background: linear-gradient(to right, transparent, var(--color-accent) 10%, var(--color-accent) 90%, transparent);"></div><!-- Decorative Color Blocks -->
+      <div class="absolute top-0 left-24 w-2 h-24 rounded-sm" style="background: var(--color-block-teal); opacity: 0.6;"></div>
+      <div class="absolute top-16 right-48 w-3 h-3 rounded-full" style="background: var(--color-block-burgundy); opacity: 0.7;"></div><!-- Timeline Scroll Container -->
+      <div class="timeline-scroll overflow-x-auto pb-8">
+       <div class="flex gap-8 md:gap-12 min-w-max px-4"><!-- Milestone 1: Curiosity -->
+        <div class="flex flex-col items-center w-64 md:w-72"><!-- Photo -->
+         <div class="photo-frame w-40 h-48 md:w-48 md:h-56 rounded-lg mb-6 flex items-center justify-center overflow-hidden"><img src="https://lh3.googleusercontent.com/d/1Z4xRbGXg07xfdmheOqbDCw2ebLEPnEda" alt="Childhood" class="w-full h-full object-cover relative z-10" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='#2A2A2A'; this.alt='Image unavailable';">
+          <div class="photo-accent-line"></div>
+         </div><!-- Timeline Dot -->
+         <div class="w-4 h-4 rounded-full border-2 mb-6" style="background: var(--color-bg); border-color: var(--color-accent);"></div><!-- Content -->
+         <div class="text-center"><span class="text-xs uppercase tracking-widest" style="color: var(--color-muted);">Early Years</span>
+          <h3 class="font-display text-xl md:text-2xl mt-2 mb-3" style="color: var(--color-text);">Curiosity came first</h3>
+          <p class="font-body text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.8;">As a kid, I loved puzzles, the kind where you sit with a problem, move pieces around, and slowly see a picture come together. I was always curious about how things worked and what would happen if one part changed. Whether it was patterns, systems, or ideas, I enjoyed figuring things out piece by piece.<br><br> That way of thinking never really left me.</p>
+         </div>
+        </div><!-- Milestone 2: Engineering -->
+        <div class="flex flex-col items-center w-64 md:w-72"><!-- Photo -->
+         <div class="photo-frame w-40 h-48 md:w-48 md:h-56 rounded-lg mb-6 flex items-center justify-center overflow-hidden"><img src="https://lh3.googleusercontent.com/d/1ieRYRo2_7tcweDE_RzumfZIasJvIF9Ae" alt="College" class="w-full h-full object-cover relative z-10" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='#2A2A2A'; this.alt='Image unavailable';">
+          <div class="photo-accent-line"></div>
+         </div><!-- Timeline Dot -->
+         <div class="w-4 h-4 rounded-full border-2 mb-6" style="background: var(--color-bg); border-color: var(--color-accent);"></div><!-- Content -->
+         <div class="text-center"><span class="text-xs uppercase tracking-widest" style="color: var(--color-muted);">Undergrad</span>
+          <h3 class="font-display text-xl md:text-2xl mt-2 mb-3" style="color: var(--color-text);">Learning how systems work</h3>
+          <p class="font-body text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.8;">I chose Computer Engineering because it felt like a natural extension of that curiosity. I wanted to understand how systems work beneath the surface. Engineering taught me structure, logic, and how to break down complex problems into smaller, solvable components. <br> <br> It gave me the discipline to turn curiosity into something concrete.</p>
+         </div>
+        </div><!-- Milestone 3: Shift -->
+        <div class="flex flex-col items-center w-64 md:w-72"><!-- Photo -->
+         <div class="photo-frame w-40 h-48 md:w-48 md:h-56 rounded-lg mb-6 flex items-center justify-center overflow-hidden"><img src="https://lh3.googleusercontent.com/d/1nfkOh-VJlI-6_NYwr3NcuGeE98oPQmiS" alt="The Shift" class="w-full h-full object-cover relative z-10" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='#2A2A2A'; this.alt='Image unavailable';">
+          <div class="photo-accent-line"></div>
+         </div><!-- Timeline Dot -->
+         <div class="w-4 h-4 rounded-full border-2 mb-6" style="background: var(--color-bg); border-color: var(--color-accent);"></div><!-- Content -->
+         <div class="text-center"><span class="text-xs uppercase tracking-widest" style="color: var(--color-muted);">The Shift</span>
+          <h3 class="font-display text-xl md:text-2xl mt-2 mb-3" style="color: var(--color-text);">From building to deciding</h3>
+          <p class="font-body text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.8;">During my product internship, something clicked. I enjoyed the technical work, but what really energized me was making product decisions: shaping user journeys, weighing trade-offs, and deciding what to build and why.
+
+<br> <br> It felt like solving real-world puzzles with real impact. That’s when I realized this wasn’t just interesting work, this was what I wanted to do.</p>
+         </div>
+        </div><!-- Milestone 4: Now -->
+        <div class="flex flex-col items-center w-64 md:w-72"><!-- Photo -->
+         <div class="photo-frame w-40 h-48 md:w-48 md:h-56 rounded-lg mb-6 flex items-center justify-center overflow-hidden"><img src="https://lh3.googleusercontent.com/d/1XzrxNF3DqNHCkcgWkn7YF-1GqCZSb64v" alt="USC / Now" class="w-full h-full object-cover relative z-10" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.background='#2A2A2A'; this.alt='Image unavailable';">
+          <div class="photo-accent-line"></div>
+         </div><!-- Timeline Dot -->
+         <div class="w-4 h-4 rounded-full border-2 mb-6" style="background: var(--color-accent); border-color: var(--color-accent);"></div><!-- Content -->
+         <div class="text-center"><span class="text-xs uppercase tracking-widest" style="color: var(--color-muted);">Now</span>
+          <h3 class="font-display text-xl md:text-2xl mt-2 mb-3" style="color: var(--color-text);">Turning insight into action</h3>
+          <p class="font-body text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.8;">Now, as a Business Analytics graduate student at USC Marshall, I focus on turning data into clear direction. I enjoy working in ambiguity, asking better questions, and using insight to guide decisions that matter. <br> <br> This is where curiosity turns into action.</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Scroll hint -->
+      <div class="flex justify-center mt-4 md:hidden"><span class="text-xs" style="color: var(--color-muted);"> 👈 Scroll to explore  </span>
+      </div>
+     </div>
+    </div>
+   </section><!-- SECTION 3: EXPERIENCE (Vertical Alternating Timeline) -->
+   <section id="experience" class="section-offset py-20 px-6 md:px-16" style="background-color: var(--color-bg);">
+    <div class="max-w-5xl mx-auto"><!-- Section Header -->
+     <div class="mb-16">
+      <h2 class="font-display section-header font-medium">Experience</h2>
+      <p class="font-body text-sm mt-3 uppercase tracking-widest" style="color: var(--color-muted);">Where I've contributed</p>
+     </div><!-- Vertical Timeline -->
+     <div class="vertical-timeline"><!-- Experience 1: APASS (RIGHT SIDE - Most Recent) -->
+      <div class="relative mb-2">
+       <div class="timeline-dot" style="top: 24px;"></div>
+       <div class="flex justify-end">
+        <div class="w-full md:w-9/12 md:ml-auto md:pl-80">
+         <div id="exp-1" class="experience-card rounded-lg p-6 cursor-pointer"><!-- Collapsed View -->
+          <div class="collapsed-view">
+           <div class="flex justify-between items-start mb-3">
+            <div>
+             <h3 class="font-display text-1xl font-medium" style="color: var(--color-text);">Project Manager (Graduate Assistant)</h3>
+             <p class="font-body text-sm mt-1" style="color: var(--color-accent);">APASS — Asian Pacific American Student Services, USC</p>
+            </div><span class="text-sm whitespace-nowrap ml-4" style="color: var(--color-muted);"> Jan 2026 - Present </span>
+           </div>
+           <p class="text-sm mb-4 leading-relaxed" style="color: var(--color-muted);">Project Manager supporting student-facing programs, people operations, and execution.</p>
+           <div class="mb-4">
+            <p class="text-sm font-medium mb-2" style="color: var(--color-text);">Impact:</p>
+            <ul class="space-y-2">
+             <li class="flex items-start gap-2 text-sm" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Led 8-person team</li>
+             <li class="flex items-start gap-2 text-sm" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Improved coordination and delivery</li>
+             <li class="flex items-start gap-2 text-sm" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Data-informed content strategy</li>
+            </ul>
+           </div><button onclick="event.stopPropagation(); toggleExperience('exp-1');" class="view-details-btn flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-70" style="color: var(--color-accent);"> <span class="view-text">View details</span>
+            <svg class="w-4 h-4 transition-transform arrow-icon" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg></button>
+          </div><!-- Expanded View -->
+          <div class="expanded-view hidden mt-6 pt-6" style="border-top: 1px solid rgba(212, 175, 55, 0.2);">
+           <ul class="space-y-4 mb-5">
+            <li class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Lead and manage a team of eight Center Assistants, overseeing task allocation, performance tracking, and day-to-day operations</li>
+            <li class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Plan and execute academic and student-facing event timelines using Trello to ensure alignment and on-time delivery</li>
+            <li class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Manage APASS social media using Buffer and analyze engagement metrics to refine content strategy and improve visibility</li>
+           </ul>
+           <div class="p-4 rounded-lg" style="background: rgba(210, 105, 30, 0.08);">
+            <p class="text-sm italic leading-relaxed" style="color: var(--color-text); opacity: 0.75;">"This role strengthened my leadership skills and reinforced the importance of clear communication and people-centered decision-making."</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Experience 2: TMRW (LEFT SIDE) -->
+      <div class="relative mb-2" style="margin-top: -7rem;">
+       <div class="timeline-dot" style="top: 24px;"></div>
+       <div class="flex">
+        <div class="w-full md:w-9/12 md:pr-80">
+         <div id="exp-2" class="experience-card rounded-lg p-6 cursor-pointer"><!-- Collapsed View -->
+          <div class="collapsed-view">
+           <div class="flex justify-between items-start mb-3">
+            <div>
+             <h3 class="font-display text-1xl font-medium" style="color: var(--color-text);">Product Manager</h3>
+             <p class="font-body text-sm mt-1" style="color: var(--color-accent);">TMRW House of Brands (Aditya Birla Fashion Venture)</p>
+            </div><span class="text-sm whitespace-nowrap ml-4" style="color: var(--color-muted);"> Jan 2025 – Jun 2025 </span>
+           </div>
+           <p class="text-sm mb-4 leading-relaxed" style="color: var(--color-muted);">Product Manager working on discovery, delivery, and engagement for a Gen Z–focused fashion platform.</p>
+           <div class="mb-4">
+            <p class="text-sm font-medium mb-2" style="color: var(--color-text);">Impact:</p>
+            <ul class="space-y-2">
+             <li class="flex items-start gap-2 text-sm" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> +7.63% conversion &amp; CTR</li>
+             <li class="flex items-start gap-2 text-sm" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> −25% delivery lead time</li>
+             <li class="flex items-start gap-2 text-sm" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> +18% NPS</li>
+             <li class="flex items-start gap-2 text-sm" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> −23% item returns</li>
+            </ul>
+           </div><button onclick="event.stopPropagation(); toggleExperience('exp-2');" class="view-details-btn flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-70" style="color: var(--color-accent);"> <span class="view-text">View details</span>
+            <svg class="w-4 h-4 transition-transform arrow-icon" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg></button>
+          </div><!-- Expanded View -->
+          <div class="expanded-view hidden mt-6 pt-6" style="border-top: 1px solid rgba(212, 175, 55, 0.2);">
+           <ul class="space-y-4 mb-5">
+            <li class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Led product discovery and UX research to redesign the homepage experience, improving navigation clarity and call-to-action performance for Gen Z users</li>
+            <li class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Defined product requirements and user stories to integrate same-day and next-day delivery across checkout and logistics systems</li>
+            <li class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Worked closely with design, engineering, and operations to redesign chatbot and NPS survey journeys, automating flows and reducing manual support effort</li>
+            <li class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Translated customer feedback into a recommender feature that improved purchase accuracy and reduced returns</li>
+            <li class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Researched and implemented AI-generated visual assets on product pages to streamline content creation while maintaining conversion performance</li>
+           </ul>
+           <div class="p-4 rounded-lg" style="background: rgba(210, 105, 30, 0.08);">
+            <p class="text-sm italic leading-relaxed" style="color: var(--color-text); opacity: 0.75;">"This role taught me how to make product decisions in ambiguous, fast-moving environments and how small experience changes can drive outsized impact."</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Experience 3: WUElev8 (RIGHT SIDE) -->
+      <div class="relative" style="margin-top: -7rem;">
+       <div class="timeline-dot" style="top: 24px;"></div>
+       <div class="flex justify-end">
+        <div class="w-full md:w-9/12 md:ml-auto md:pl-80">
+         <div id="exp-3" class="experience-card rounded-lg p-6 cursor-pointer"><!-- Collapsed View -->
+          <div class="collapsed-view">
+           <div class="flex justify-between items-start mb-3">
+            <div>
+             <h3 class="font-display text-1xl font-medium" style="color: var(--color-text);">Product Development &amp; Strategy Analyst</h3>
+             <p class="font-body text-sm mt-1" style="color: var(--color-accent);">WUElev8 Innovation Services Pvt. Ltd.</p>
+            </div><span class="text-sm whitespace-nowrap ml-4" style="color: var(--color-muted);"> May 2024 – Jul 2024 </span>
+           </div>
+           <p class="text-sm mb-4 leading-relaxed" style="color: var(--color-muted);">Early-stage product strategy and MVP development for a collaborative platform.</p>
+           <div class="mb-4">
+            <p class="text-sm font-medium mb-2" style="color: var(--color-text);">Impact:</p>
+            <ul class="space-y-2">
+             <li class="flex items-start gap-2 text-sm" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Defined product vision and roadmap</li>
+             <li class="flex items-start gap-2 text-sm" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Built MVP architecture</li>
+             <li class="flex items-start gap-2 text-sm" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> −30% development bottlenecks</li>
+            </ul>
+           </div><button onclick="event.stopPropagation(); toggleExperience('exp-3');" class="view-details-btn flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-70" style="color: var(--color-accent);"> <span class="view-text">View details</span>
+            <svg class="w-4 h-4 transition-transform arrow-icon" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg></button>
+          </div><!-- Expanded View -->
+          <div class="expanded-view hidden mt-6 pt-6" style="border-top: 1px solid rgba(212, 175, 55, 0.2);">
+           <ul class="space-y-4 mb-5">
+            <li class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Conducted competitor analysis and user research to define the product vision and roadmap</li>
+            <li class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Built and tested a scalable product architecture using FastAPI and Figma prototypes</li>
+            <li class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Applied agile execution to deliver an MVP and reduce development bottlenecks by 30%</li>
+           </ul>
+           <div class="p-4 rounded-lg" style="background: rgba(210, 105, 30, 0.08);">
+            <p class="text-sm italic leading-relaxed" style="color: var(--color-text); opacity: 0.75;">"This experience gave me early exposure to end-to-end product thinking and the trade-offs involved in building from zero."</p>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- SECTION 4: PROJECTS (HORIZONTAL SCROLL) -->
+   <section id="projects" class="section-offset py-20 px-6 md:px-16">
+    <div class="max-w-6xl mx-auto"><!-- Section Header -->
+     <div class="mb-12">
+      <h2 class="font-display section-header font-medium">Projects</h2>
+      <p class="font-body text-sm mt-3 uppercase tracking-widest" style="color: var(--color-muted);">How I apply thinking to problems</p>
+     </div><!-- Horizontal Scroll Container -->
+     <div class="relative">
+      <div class="timeline-scroll overflow-x-auto pb-8">
+       <div class="flex gap-6 min-w-max"><!-- Project 1: Social Media Engagement -->
+        <div id="proj-1" class="project-card flex-shrink-0 w-[340px] md:w-[380px] p-6 rounded-2xl transition-all hover:transform hover:scale-105 cursor-pointer relative overflow-hidden" style="background: var(--color-block-charcoal); border: 2px solid rgba(201, 169, 97, 0.2);">
+         <div class="absolute top-0 right-0 w-24 h-24 rounded-full" style="background: radial-gradient(circle, rgba(201, 169, 97, 0.15), transparent); transform: translate(50%, -50%);"></div><!-- Collapsed View -->
+         <div class="collapsed-view">
+          <div class="flex justify-between items-start mb-3">
+           <h3 class="font-display text-xl md:text-2xl font-medium pr-3" style="color: var(--color-text);">Multi-Platform Social Media Engagement Insights</h3>
+          </div>
+          <p class="text-xs mb-4" style="color: var(--color-muted);">Los Angeles, CA | Sep 2025</p>
+          <p class="text-sm mb-4 leading-relaxed" style="color: var(--color-text); opacity: 0.85;">Analyzed long-term social media data to understand what actually drives engagement across platforms.</p>
+          <div class="mb-4">
+           <p class="text-xs font-medium mb-2" style="color: var(--color-text);">Highlights:</p>
+           <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-xs" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> 6 years of engagement data</li>
+            <li class="flex items-start gap-2 text-xs" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Content and timing insights</li>
+            <li class="flex items-start gap-2 text-xs" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Actionable strategy recommendations</li>
+           </ul>
+          </div>
+          <div class="flex items-center gap-3"><button onclick="event.stopPropagation(); toggleProject('proj-1');" class="view-details-btn flex items-center gap-2 text-xs font-medium transition-colors hover:opacity-70" style="color: var(--color-accent);"> <span class="view-text">View case</span>
+            <svg class="w-3 h-3 transition-transform arrow-icon" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg></button> <a href="https://www.canva.com/design/DAG0tw-2tlo/jFaseK3Seh2_Xd3d_UY4NA/view?utm_content=DAG0tw-2tlo&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h1d68d1b739" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="flex items-center gap-1.5 text-xs font-medium transition-colors hover:opacity-70" style="color: var(--color-accent);"> <span>Link to project</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg></a>
+          </div>
+         </div><!-- Expanded View -->
+         <div class="expanded-view hidden mt-4 pt-4" style="border-top: 1px solid rgba(212, 175, 55, 0.2);">
+          <ul class="space-y-2.5 mb-4">
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Analyzed six years of multi-platform engagement data using Python and Excel to understand patterns in content themes, posting times, and audience behavior</li>
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Looked beyond short-term spikes to identify what consistently drove engagement over time</li>
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Found that timing and narrative consistency mattered more than posting frequency</li>
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Translated insights into clear, data-backed recommendations to refine social media strategy and improve follower engagement</li>
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Collaborated with a cross-functional team to deliver insights recognized for both creativity and real-world impact</li>
+          </ul>
+          <div class="p-3 rounded-lg" style="background: rgba(210, 105, 30, 0.08);">
+           <p class="text-xs italic leading-relaxed" style="color: var(--color-text); opacity: 0.75;">"This project strengthened my ability to turn messy historical data into clear strategic direction."</p>
+          </div>
+         </div>
+        </div><!-- Project 2: Yapper -->
+        <div id="proj-2" class="project-card flex-shrink-0 w-[340px] md:w-[380px] p-6 rounded-2xl transition-all hover:transform hover:scale-105 cursor-pointer relative overflow-hidden" style="background: var(--color-block-navy); border: 2px solid rgba(201, 169, 97, 0.2);">
+         <div class="absolute bottom-0 left-0 w-28 h-28 rounded-full" style="background: radial-gradient(circle, rgba(201, 169, 97, 0.15), transparent); transform: translate(-50%, 50%);"></div><!-- Collapsed View -->
+         <div class="collapsed-view">
+          <div class="flex justify-between items-start mb-3">
+           <h3 class="font-display text-xl md:text-2xl font-medium pr-3" style="color: var(--color-text);">Yapper - AI-Powered Coffee Chat Simulator</h3>
+          </div>
+          <p class="text-xs mb-4" style="color: var(--color-muted);">Los Angeles, CA | Aug 2025</p>
+          <p class="text-sm mb-4 leading-relaxed" style="color: var(--color-text); opacity: 0.85;">Explored how AI could make professional networking more accessible and less intimidating.</p>
+          <div class="mb-4">
+           <p class="text-xs font-medium mb-2" style="color: var(--color-text);">Highlights:</p>
+           <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-xs" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> AI-driven personalization</li>
+            <li class="flex items-start gap-2 text-xs" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Prototype built in Figma</li>
+            <li class="flex items-start gap-2 text-xs" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Global team collaboration</li>
+           </ul>
+          </div>
+          <div class="flex items-center gap-3"><button onclick="event.stopPropagation(); toggleProject('proj-2');" class="view-details-btn flex items-center gap-2 text-xs font-medium transition-colors hover:opacity-70" style="color: var(--color-accent);"> <span class="view-text">View case</span>
+            <svg class="w-3 h-3 transition-transform arrow-icon" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg></button> <a href="https://docs.google.com/presentation/d/1iBtrjNSBhS9YYEF64nzwN6yNKHhh73dAj57j6aAgzS0/edit?usp=sharing" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="flex items-center gap-1.5 text-xs font-medium transition-colors hover:opacity-70" style="color: var(--color-accent);"> <span>Link to project</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg></a>
+          </div>
+         </div><!-- Expanded View -->
+         <div class="expanded-view hidden mt-4 pt-4" style="border-top: 1px solid rgba(212, 175, 55, 0.2);">
+          <ul class="space-y-2.5 mb-4">
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Built a prototype for an AI-powered coffee chat platform using Figma and Lovable AI</li>
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Explored how LinkedIn data could be used to personalize introductions and conversation prompts</li>
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Focused on reducing the social friction that often makes networking feel awkward or inaccessible</li>
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Collaborated with a global, cross-cultural team across time zones</li>
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Presented the concept to senior business analytics professionals and received strong feedback on its relevance and execution</li>
+          </ul>
+          <div class="p-3 rounded-lg" style="background: rgba(210, 105, 30, 0.08);">
+           <p class="text-xs italic leading-relaxed" style="color: var(--color-text); opacity: 0.75;">"This project helped me think more deeply about human-centered AI and the role of design in building confidence."</p>
+          </div>
+         </div>
+        </div><!-- Project 3: Netflix Data Viz -->
+        <div id="proj-3" class="project-card flex-shrink-0 w-[340px] md:w-[380px] p-6 rounded-2xl transition-all hover:transform hover:scale-105 cursor-pointer relative overflow-hidden" style="background: var(--color-block-teal); border: 2px solid rgba(201, 169, 97, 0.2);">
+         <div class="absolute top-1/2 right-0 w-32 h-32 rounded-full" style="background: radial-gradient(circle, rgba(201, 169, 97, 0.2), transparent); transform: translate(50%, -50%);"></div><!-- Collapsed View -->
+         <div class="collapsed-view">
+          <div class="flex justify-between items-start mb-3">
+           <h3 class="font-display text-xl md:text-2xl font-medium pr-3" style="color: var(--color-text);">Streaming Insights — Netflix Data Visualization</h3>
+          </div>
+          <p class="text-xs mb-4" style="color: var(--color-muted);">Indore, India | Feb 2025</p>
+          <p class="text-sm mb-4 leading-relaxed" style="color: var(--color-text); opacity: 0.85;">Used large-scale viewing data to uncover patterns in content preferences and viewer retention.</p>
+          <div class="mb-4">
+           <p class="text-xs font-medium mb-2" style="color: var(--color-text);">Highlights:</p>
+           <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-xs" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> 1M+ records analyzed</li>
+            <li class="flex items-start gap-2 text-xs" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Interactive Tableau dashboard</li>
+            <li class="flex items-start gap-2 text-xs" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Faster data pipelines</li>
+           </ul>
+          </div>
+          <div class="flex items-center gap-3"><button onclick="event.stopPropagation(); toggleProject('proj-3');" class="view-details-btn flex items-center gap-2 text-xs font-medium transition-colors hover:opacity-70" style="color: var(--color-accent);"> <span class="view-text">View case</span>
+            <svg class="w-3 h-3 transition-transform arrow-icon" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg></button> <a href="https://public.tableau.com/shared/9SR564SF3?:display_count=n&:origin=viz_share_link" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="flex items-center gap-1.5 text-xs font-medium transition-colors hover:opacity-70" style="color: var(--color-accent);"> <span>Link to project</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg></a>
+          </div>
+         </div><!-- Expanded View -->
+         <div class="expanded-view hidden mt-4 pt-4" style="border-top: 1px solid rgba(212, 175, 55, 0.2);">
+          <ul class="space-y-2.5 mb-4">
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Built an interactive Tableau dashboard using over one million Netflix records to analyze genre preferences, engagement spikes, and retention trends</li>
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Designed the dashboard to make complex data easier to explore and more useful for decision-making</li>
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Optimized Python–SQL pipelines to improve data processing efficiency and dashboard performance</li>
+           <li class="text-xs leading-relaxed" style="color: var(--color-text); opacity: 0.85;"><span style="color: var(--color-accent);">•</span> Improved data processing speed by 30% and increased dashboard load speed and analytical depth by 20%</li>
+          </ul>
+          <div class="p-3 rounded-lg" style="background: rgba(210, 105, 30, 0.08);">
+           <p class="text-xs italic leading-relaxed" style="color: var(--color-text); opacity: 0.75;">"This project reinforced the importance of pairing strong analysis with clear, thoughtful visualization."</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      
+     </div>
+    </div>
+   </section><!-- SECTION 5: SKILLS (FULL-WIDTH COLOR BAND) -->
+   <section id="skills" class="section-offset py-28" style="background: var(--color-skills-band); color: white;">
+    <div class="max-w-5xl mx-auto px-6 md:px-16"><!-- Section Header -->
+     <div class="mb-12">
+      <h2 class="font-display section-header font-medium" style="color: white;">Skills</h2>
+     </div><!-- Skills Blocks -->
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-8"><!-- Block 1: Product & Strategy with Teal -->
+      <div class="rounded-2xl p-8 transition-transform hover:scale-105 relative overflow-hidden" style="background: var(--color-block-teal); border: 2px solid rgba(201, 169, 97, 0.3);">
+       <div class="absolute top-0 right-0 w-32 h-32 rounded-full" style="background: radial-gradient(circle, rgba(201, 169, 97, 0.2), transparent); transform: translate(50%, -50%);"></div>
+       <h3 class="font-display text-xl font-medium mb-6 relative z-10" style="color: var(--color-accent);">Product &amp; Strategy</h3>
+       <div class="flex flex-wrap gap-2 relative z-10"><span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Product Roadmapping</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">A/B Testing</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">GTM Strategy</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Agile Methodologies</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Product Analytics</span>
+       </div>
+      </div><!-- Block 2: Tools & Technologies with Navy -->
+      <div class="rounded-2xl p-8 transition-transform hover:scale-105 relative overflow-hidden" style="background: var(--color-block-navy); border: 2px solid rgba(201, 169, 97, 0.3);">
+       <div class="absolute bottom-0 left-0 w-40 h-40 rounded-full" style="background: radial-gradient(circle, rgba(201, 169, 97, 0.15), transparent); transform: translate(-50%, 50%);"></div>
+       <h3 class="font-display text-xl font-medium mb-6 relative z-10" style="color: var(--color-accent);">Tools &amp; Technologies</h3>
+       <div class="flex flex-wrap gap-2 relative z-10"><span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Enginius</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Python</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Jira</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Amplitude</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Tableau</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">SQL</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Microsoft Excel</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Figma</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Git</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Github</span>
+       </div>
+      </div><!-- Block 3: Business & Operations with Burgundy -->
+      <div class="rounded-2xl p-8 transition-transform hover:scale-105 relative overflow-hidden" style="background: var(--color-block-burgundy); border: 2px solid rgba(201, 169, 97, 0.3);">
+       <div class="absolute top-0 left-1/2 w-36 h-36 rounded-full" style="background: radial-gradient(circle, rgba(201, 169, 97, 0.2), transparent); transform: translate(-50%, -50%);"></div>
+       <h3 class="font-display text-xl font-medium mb-6 relative z-10" style="color: var(--color-accent);">Business &amp; Operations</h3>
+       <div class="flex flex-wrap gap-2 relative z-10"><span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Business Analytics</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Requirements Gathering</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Workflow Optimization</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Stakeholder Management</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Presentation Skills</span> <span class="px-4 py-2 rounded-full text-xs transition-transform hover:scale-110 cursor-default" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(201, 169, 97, 0.4);">Problem Solving</span>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- SECTION 6: AWARDS & LEADERSHIP -->
+   <section id="awards" class="section-offset py-20 px-6 md:px-16" style="background-color: var(--color-bg);">
+    <div class="max-w-5xl mx-auto"><!-- Section Header -->
+     <div class="mb-16">
+      <h2 class="font-display section-header font-medium">Awards &amp; Leadership</h2>
+      <p class="font-body text-sm mt-3 uppercase tracking-widest" style="color: var(--color-muted);">Recognition and contributions</p>
+     </div><!-- Awards Grid -->
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-8"><!-- Award 1: Dean's List -->
+      <div class="border-l-4 pl-6 py-3" style="border-color: var(--color-accent);">
+       <h3 class="font-display text-xl md:text-2xl font-medium mb-2" style="color: var(--color-text);">Dean's List — USC Marshall</h3>
+       <p class="text-xs font-medium mb-3" style="color: var(--color-accent);">GPA: 4.0 / 4.0</p>
+       <p class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;">Recognized for academic excellence in the Master of Science in Business Analytics program, reflecting strong performance across analytics, strategy, and applied coursework.</p>
+      </div><!-- Award 2: AI Case Competition -->
+      <div class="border-l-4 pl-6 py-3" style="border-color: var(--color-accent);">
+       <h3 class="font-display text-xl md:text-2xl font-medium mb-2" style="color: var(--color-text);">USC Marshall Global AI Case Competition</h3>
+       <p class="text-xs font-medium mb-3" style="color: var(--color-accent);">2nd Place (Global)</p>
+       <p class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;">Designed an AI workforce automation prototype focused on operational efficiency and decision support. Worked across product thinking, strategy, and client framing to deliver a solution balancing technical feasibility with real business impact.</p>
+      </div><!-- Award 3: Marketing Case Competition -->
+      <div class="border-l-4 pl-6 py-3" style="border-color: var(--color-accent);">
+       <h3 class="font-display text-xl md:text-2xl font-medium mb-2" style="color: var(--color-text);">USC Marshall MS Marketing Case Competition</h3>
+       <p class="text-xs font-medium mb-3" style="color: var(--color-accent);">3rd Place</p>
+       <p class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;">Built a people-first social media strategy that reframed client channels as community-driven storytelling platforms. Focused on audience behavior, content positioning, and long-term engagement rather than short-term metrics.</p>
+      </div><!-- Award 4: ACM Chair -->
+      <div class="border-l-4 pl-6 py-3" style="border-color: var(--color-accent);">
+       <h3 class="font-display text-xl md:text-2xl font-medium mb-2" style="color: var(--color-text);">Chair, ACM Chapter — NMIMS University</h3>
+       <p class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;">Founded and led the ACM student chapter, building and managing a 36-member team while organizing technical initiatives, workshops, and events. This role strengthened my leadership and cross-team coordination skills.</p>
+      </div><!-- Award 5: Social Media Head -->
+      <div class="border-l-4 pl-6 py-3" style="border-color: var(--color-accent);">
+       <h3 class="font-display text-xl md:text-2xl font-medium mb-2" style="color: var(--color-text);">Social Media Head, Cultural Club — NMIMS</h3>
+       <p class="text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.85;">Led digital campaigns to increase event reach and engagement, using audience insights and content strategy to improve visibility and participation across platforms.</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- SECTION 7: TESTIMONIALS -->
+   <section id="testimonials" class="section-offset py-20 px-6 md:px-16" style="background-color: var(--color-bg);">
+    <div class="max-w-6xl mx-auto"><!-- Section Header -->
+     <div class="mb-14">
+      <h2 class="font-display section-header font-medium">What It's Like Working With Me</h2>
+     </div><!-- Testimonials -->
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-6"><!-- Testimonial 1 -->
+      <div class="testimonial-block relative overflow-hidden" style="background: var(--color-block-teal); border: 2px solid rgba(201, 169, 97, 0.2);">
+       <div class="absolute top-0 right-0 w-20 h-20 rounded-full" style="background: radial-gradient(circle, rgba(201, 169, 97, 0.15), transparent); transform: translate(50%, -50%);"></div>
+       <h4 class="text-xs uppercase tracking-widest mb-4" style="color: var(--color-accent);">Product Thinking &amp; Execution</h4>
+       <div class="testimonial-quote mb-4">
+        <p class="font-body text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.9;">Preet brings a highly structured approach to translating ideas into execution, with a strong grasp of business priorities and user impact. She takes end-to-end ownership and follows through with clarity and calm, even in fast-paced environments.</p>
+       </div>
+       <div class="mt-auto">
+        <p class="text-xs font-medium" style="color: var(--color-text);">Chhaya Umbarkar</p>
+        <p class="text-xs" style="color: var(--color-muted);">Product Manager, TMRW House of Brands</p>
+       </div>
+      </div><!-- Testimonial 2 -->
+      <div class="testimonial-block relative overflow-hidden" style="background: var(--color-block-burgundy); border: 2px solid rgba(201, 169, 97, 0.2);">
+       <div class="absolute bottom-0 left-0 w-24 h-24 rounded-full" style="background: radial-gradient(circle, rgba(201, 169, 97, 0.15), transparent); transform: translate(-50%, 50%);"></div>
+       <h4 class="text-xs uppercase tracking-widest mb-4" style="color: var(--color-accent);">Strategy, Ownership &amp; Growth</h4>
+       <div class="testimonial-quote mb-4">
+        <p class="font-body text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.9;">Preet consistently blended structured thinking with creative insight across product, design, data, and engineering. Her learning velocity, ownership, and ability to deliver high-quality work with minimal oversight set her apart.</p>
+       </div>
+       <div class="mt-auto">
+        <p class="text-xs font-medium" style="color: var(--color-text);">Sahil Mangal</p>
+        <p class="text-xs" style="color: var(--color-muted);">Director of Product, TMRW House of Brands</p>
+       </div>
+      </div><!-- Testimonial 3 -->
+      <div class="testimonial-block relative overflow-hidden" style="background: var(--color-block-navy); border: 2px solid rgba(201, 169, 97, 0.2);">
+       <div class="absolute top-1/2 right-0 w-28 h-28 rounded-full" style="background: radial-gradient(circle, rgba(201, 169, 97, 0.2), transparent); transform: translate(50%, -50%);"></div>
+       <h4 class="text-xs uppercase tracking-widest mb-4" style="color: var(--color-accent);">Leadership &amp; Foundations</h4>
+       <div class="testimonial-quote mb-4">
+        <p class="font-body text-sm leading-relaxed" style="color: var(--color-text); opacity: 0.9;">Preet demonstrated a strong combination of leadership and collaboration. She consistently took initiative, guided teams effectively, and engaged thoughtfully with diverse perspectives. I highly recommend her.</p>
+       </div>
+       <div class="mt-auto">
+        <p class="text-xs font-medium" style="color: var(--color-text);">Anshuman Jaswal</p>
+        <p class="text-xs" style="color: var(--color-muted);">Campus Director, NMIMS University</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- SECTION 8: GET IN TOUCH -->
+   <section id="contact" class="section-offset py-24 px-6 md:px-16" style="background: linear-gradient(135deg, #2D5F5D 0%, #1E3A5F 50%, #6B2D3E 100%);">
+    <div class="max-w-2xl mx-auto text-center"><!-- Closing Line -->
+     <p id="closing-message" class="font-display text-2xl md:text-3xl leading-relaxed mb-10" style="color: #E8E4D9;">I'm always interested in conversations around building, data, and decisions.</p><!-- Contact Links -->
+     <div class="flex flex-wrap justify-center items-center gap-6 text-sm mb-10"><a id="contact-email" href="mailto:preet@usc.edu" class="flex items-center gap-2 transition-opacity hover:opacity-70" style="color: var(--color-accent);">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+       </svg><span>Email</span> </a> <a id="contact-linkedin" href="https://linkedin.com/in/preetsadhwani" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 transition-opacity hover:opacity-70" style="color: var(--color-accent);">
+       <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+       </svg><span>LinkedIn</span> </a>
+     </div><!-- Download Resume Button -->
+     <div class="mb-12"><a id="download-resume"
+     href="https://drive.google.com/file/d/1j4aG4LF6nRmmbrsWYaonzrzduFDzs59f/view?usp=sharing"
+     target="_blank"
+     rel="noopener noreferrer"
+     class="inline-flex items-center gap-3 px-8 py-4 rounded-lg font-medium text-base transition-all hover:opacity-90 hover:transform hover:scale-105"
+     style="background: var(--color-accent); color: white; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);">
+     
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg><span>Download Resume</span> </a>
+     </div><!-- Subtle Footer Note -->
+     <p class="mt-16 text-xs" style="color: var(--color-muted);">Always learning. Always building.</p>
+    </div>
+   </section>
+  </div>
+  <script>
+    // Mobile menu toggle
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+    
+    // Store for loaded photos
+    let photoStorage = {};
+    
+    // Initialize Data SDK
+    const dataHandler = {
+      onDataChanged(data) {
+        console.log('Data changed, received records:', data.length);
+        
+        // Load all photos from storage
+        photoStorage = {};
+        data.forEach(record => {
+          console.log('Processing record:', record.photo_key);
+          if (record.photo_key && record.photo_data) {
+            photoStorage[record.photo_key] = {
+              data: record.photo_data,
+              record: record
+            };
+          }
+        });
+        
+        console.log('Photo storage updated:', Object.keys(photoStorage));
+        
+        // Update all photo displays
+        updatePhoto('home-photo-img', 'home-photo-placeholder', photoStorage['home_photo']?.data || '', 'home-photo-container');
+        updatePhoto('journey-photo-1-img', 'journey-photo-1-placeholder', photoStorage['journey_photo_1']?.data || '', 'journey-photo-1-container');
+        updatePhoto('journey-photo-2-img', 'journey-photo-2-placeholder', photoStorage['journey_photo_2']?.data || '', 'journey-photo-2-container');
+        updatePhoto('journey-photo-3-img', 'journey-photo-3-placeholder', photoStorage['journey_photo_3']?.data || '', 'journey-photo-3-container');
+        updatePhoto('journey-photo-4-img', 'journey-photo-4-placeholder', photoStorage['journey_photo_4']?.data || '', 'journey-photo-4-container');
+      }
+    };
+    
+    // Initialize Data SDK on load
+    async function initDataSdk() {
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error('Failed to initialize Data SDK');
+        }
+      }
+    }
+    
+    // Smooth scroll and active navigation tracking
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Data SDK
+      initDataSdk();
+      
+      const navBar = document.querySelector('.nav-bar');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const sections = document.querySelectorAll('section[id]');
+      
+      // Handle scroll for nav bar shadow
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          navBar.classList.add('scrolled');
+        } else {
+          navBar.classList.remove('scrolled');
+        }
+        
+        // Update active nav link based on scroll position
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (window.scrollY >= sectionTop - 100) {
+            current = section.getAttribute('id');
+          }
+        });
+        
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('data-section') === current) {
+            link.classList.add('active');
+          }
+        });
+      });
+      
+      // Smooth scroll on nav click
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href').substring(1);
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
+          }
+        });
+      });
+    });
+    
+    // Configuration
+    const defaultConfig = {
+      hero_name: 'Preet Sadhwani',
+      hero_subtitle: 'Data · Product · Strategy',
+      positioning_statement: 'I like figuring out why things work, and what to do once you know.',
+      location: 'Los Angeles, CA',
+      linkedin_url: 'https://www.linkedin.com/in/preet-sadhwani/',
+      email: 'psadhwan@usc.edu',
+      closing_message: 'I\'m always interested in conversations around building, data, and decisions.',
+      background_color: '#0F0F0F',
+      accent_color: '#C9A961',
+      text_color: '#F5F5F5',
+      skills_band_color: '#1A1A1A',
+      block_teal: '#2D5F5D',
+      block_burgundy: '#6B2D3E',
+      block_navy: '#1E3A5F',
+      font_family: 'Playfair Display',
+      font_size: 16,
+      home_photo_url: 'https://drive.google.com/uc?export=view&id=1pzxl09dhInaK_VYtjVTzeScYnXtXZOVX',
+      journey_photo_1_url: '',
+      journey_photo_2_url: '',
+      journey_photo_3_url: '',
+      journey_photo_4_url: ''
+    };
+    
+    // Initialize config with defaults only - SDK will update it later
+    let config = { ...defaultConfig };
+    
+    // Helper function to update a photo
+    function updatePhoto(imgId, placeholderId, url, containerId) {
+      const img = document.getElementById(imgId);
+      const placeholder = document.getElementById(placeholderId);
+      const container = document.getElementById(containerId);
+      
+      if (url && url.trim() !== '') {
+        img.src = url;
+        img.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+      } else {
+        img.classList.add('hidden');
+        placeholder.classList.remove('hidden');
+      }
+    }
+    
+    // Compress image before upload - aggressive compression for storage limits
+    async function compressImage(file, maxWidth = 400, quality = 0.5) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = new Image();
+          img.onload = function() {
+            // Calculate new dimensions - much smaller for storage
+            let width = img.width;
+            let height = img.height;
+            
+            if (width > maxWidth) {
+              height = (height * maxWidth) / width;
+              width = maxWidth;
+            }
+            
+            // Also ensure height isn't too large
+            const maxHeight = 500;
+            if (height > maxHeight) {
+              width = (width * maxHeight) / height;
+              height = maxHeight;
+            }
+            
+            // Create canvas and compress
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            
+            // Enable image smoothing for better quality at small sizes
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            // Convert to base64 with compression
+            const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+            console.log('Compressed from', e.target.result.length, 'to', compressedBase64.length, 'bytes');
+            resolve(compressedBase64);
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+    
+    // Handle photo upload
+    async function handlePhotoUpload(event, imgId, placeholderId, photoKey) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      console.log('Starting upload for:', photoKey, 'Original size:', file.size);
+      
+      // Show uploading state
+      const button = event.target.previousElementSibling;
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Compressing...';
+      }
+      
+      try {
+        // Compress the image aggressively
+        const compressedBase64 = await compressImage(file, 400, 0.5);
+        
+        // Check if compressed size is still too large (max ~30KB for base64)
+        if (compressedBase64.length > 40000) {
+          showErrorMessage(placeholderId, 'Image too large. Use a smaller photo or screenshot.');
+          if (button) {
+            button.disabled = false;
+            button.textContent = 'Upload Photo';
+          }
+          return;
+        }
+        
+        // Update the image display immediately
+        const img = document.getElementById(imgId);
+        const placeholder = document.getElementById(placeholderId);
+        img.src = compressedBase64;
+        img.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+        
+        // Update button state
+        if (button) {
+          button.textContent = 'Saving...';
+        }
+        
+        // Save to Data SDK
+        if (window.dataSdk) {
+          // Check if this photo already exists
+          const existingRecord = photoStorage[photoKey]?.record;
+          
+          let result;
+          if (existingRecord && existingRecord.__backendId) {
+            console.log('Updating existing record:', photoKey);
+            result = await window.dataSdk.update({
+              ...existingRecord,
+              photo_data: compressedBase64
+            });
+          } else {
+            console.log('Creating new record:', photoKey);
+            result = await window.dataSdk.create({
+              photo_key: photoKey,
+              photo_data: compressedBase64
+            });
+          }
+          
+          if (result.isOk) {
+            console.log('✓ Photo saved successfully:', photoKey);
+            showSuccessMessage(placeholderId, 'Photo uploaded!');
+          } else {
+            console.error('✗ Failed to save photo:', result.error);
+            showErrorMessage(placeholderId, 'Failed to save. Try a smaller photo.');
+          }
+        } else {
+          console.error('Data SDK not available');
+          showErrorMessage(placeholderId, 'Storage not available');
+        }
+      } catch (error) {
+        console.error('✗ Error during photo upload:', error);
+        showErrorMessage(placeholderId, 'Upload failed. Try again.');
+      } finally {
+        // Reset button state
+        if (button) {
+          button.disabled = false;
+          button.textContent = 'Upload Photo';
+        }
+      }
+    }
+    
+    // Helper to get all stored photos
+    async function getAllStoredPhotos() {
+      return new Promise((resolve) => {
+        let photos = [];
+        const tempHandler = {
+          onDataChanged(data) {
+            photos = data;
+          }
+        };
+        // Data is already loaded via main handler
+        resolve(Object.entries(photoStorage).map(([key, value]) => ({
+          photo_key: key,
+          photo_data: value,
+          __backendId: key
+        })));
+      });
+    }
+    
+    // Helper to show error message
+    function showErrorMessage(placeholderId, message) {
+      const placeholder = document.getElementById(placeholderId);
+      const originalContent = placeholder.innerHTML;
+      placeholder.innerHTML = `<span class="text-xs" style="color: #ff6b6b;">${message}</span>`;
+      setTimeout(() => {
+        placeholder.innerHTML = originalContent;
+      }, 3000);
+    }
+    
+    // Helper to show success message
+    function showSuccessMessage(placeholderId, message) {
+      const placeholder = document.getElementById(placeholderId);
+      const originalContent = placeholder.innerHTML;
+      placeholder.innerHTML = `<span class="text-xs" style="color: #4ade80;">${message}</span>`;
+      setTimeout(() => {
+        placeholder.innerHTML = originalContent;
+      }, 2000);
+    }
+    
+    // Show inline input for Drive link
+    function showDriveLinkPrompt(imgId, placeholderId, photoKey) {
+      const placeholder = document.getElementById(placeholderId);
+      const originalContent = placeholder.innerHTML;
+      
+      placeholder.innerHTML = `
+        <div class="text-center p-4">
+          <p class="text-sm font-medium mb-3" style="color: var(--color-accent);">📷 Paste Your Photo Link</p>
+          <p class="text-xs mb-3" style="color: var(--color-muted);">Works with Google Photos, Drive, Imgur, or any image URL</p>
+          <input type="text" id="drive-link-input" placeholder="Paste link here... (Ctrl+V or Cmd+V)" 
+                 class="w-full px-4 py-3 text-sm rounded-lg border-2 mb-3" 
+                 style="background: rgba(255,255,255,0.15); border-color: var(--color-accent); color: var(--color-text);">
+          <div class="flex gap-2 justify-center">
+            <button onclick="handleDriveLink('${imgId}', '${placeholderId}', '${photoKey}')" 
+                    class="px-6 py-2.5 rounded-lg text-sm font-medium transition-all hover:opacity-80" 
+                    style="background: var(--color-accent); color: white;">
+              ✓ Save Photo
+            </button>
+            <button onclick="cancelDriveLink('${placeholderId}', \`${originalContent.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)" 
+                    class="px-6 py-2.5 rounded-lg text-sm font-medium transition-all hover:opacity-80" 
+                    style="background: rgba(255,255,255,0.15); color: var(--color-text);">
+              Cancel
+            </button>
+          </div>
+        </div>
+      `;
+      
+      // Focus the input
+      setTimeout(() => {
+        const input = document.getElementById('drive-link-input');
+        if (input) {
+          input.focus();
+          input.select();
+        }
+      }, 100);
+    }
+    
+    // Cancel Drive link input
+    function cancelDriveLink(placeholderId, originalContent) {
+      const placeholder = document.getElementById(placeholderId);
+      placeholder.innerHTML = originalContent;
+    }
+    
+    // Convert Google Drive/Photos link to direct image URL
+    function convertDriveLink(url) {
+      // Clean up the URL
+      url = url.trim();
+      
+      // If it's already a direct image URL, return it
+      if (url.match(/\.(jpg|jpeg|png|gif|webp)$/i) || url.includes('uc?export=view')) {
+        return url;
+      }
+      
+      // Google Photos format: https://photos.app.goo.gl/xxxxx or https://photos.google.com/
+      if (url.includes('photos.app.goo.gl') || url.includes('photos.google.com')) {
+        // For Google Photos, we'll use the URL as-is since direct conversion isn't reliable
+        // User needs to use the share link
+        return url;
+      }
+      
+      // Google Drive formats
+      let fileId = null;
+      
+      // Format: https://drive.google.com/file/d/FILE_ID/view
+      if (url.includes('/file/d/')) {
+        fileId = url.split('/file/d/')[1].split('/')[0];
+      }
+      // Format: https://drive.google.com/open?id=FILE_ID
+      else if (url.includes('?id=')) {
+        fileId = url.split('?id=')[1].split('&')[0];
+      }
+      // Format: https://drive.google.com/uc?id=FILE_ID
+      else if (url.includes('uc?id=')) {
+        fileId = url.split('uc?id=')[1].split('&')[0];
+      }
+      
+      if (fileId) {
+        // Return direct image URL for Drive
+        return `https://drive.google.com/uc?export=view&id=${fileId}`;
+      }
+      
+      // If no special format detected, return the URL as-is (might be imgur, etc)
+      return url;
+    }
+    
+    // Handle Drive link submission
+    async function handleDriveLink(imgId, placeholderId, photoKey) {
+      const input = document.getElementById('drive-link-input');
+      const url = input?.value.trim();
+      
+      if (!url) {
+        showErrorMessage(placeholderId, '❌ Please paste a link first');
+        return;
+      }
+      
+      const directUrl = convertDriveLink(url);
+      if (!directUrl) {
+        showErrorMessage(placeholderId, '❌ Invalid link format');
+        return;
+      }
+      
+      // Show loading
+      const placeholder = document.getElementById(placeholderId);
+      placeholder.innerHTML = `
+        <div class="text-center p-4">
+          <div class="animate-pulse mb-2">
+            <svg class="w-8 h-8 mx-auto opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <span class="text-xs" style="color: var(--color-accent);">Loading your photo...</span>
+        </div>
+      `;
+      
+      // Update image display first
+      const img = document.getElementById(imgId);
+      img.src = directUrl;
+      img.classList.remove('hidden');
+      
+      // Save to Data SDK
+      if (window.dataSdk) {
+        const existingRecord = photoStorage[photoKey]?.record;
+        
+        let result;
+        if (existingRecord && existingRecord.__backendId) {
+          result = await window.dataSdk.update({
+            ...existingRecord,
+            photo_data: directUrl
+          });
+        } else {
+          result = await window.dataSdk.create({
+            photo_key: photoKey,
+            photo_data: directUrl
+          });
+        }
+        
+        if (result.isOk) {
+          showSuccessMessage(placeholderId, '✓ Photo saved successfully!');
+          setTimeout(() => {
+            placeholder.classList.add('hidden');
+          }, 1500);
+        } else {
+          showErrorMessage(placeholderId, '❌ Failed to save. Try again.');
+          img.classList.add('hidden');
+          placeholder.classList.remove('hidden');
+        }
+      } else {
+        // No SDK, just show the image
+        placeholder.classList.add('hidden');
+      }
+    }
+    
+    // Toggle function for projects
+    function toggleProject(projId) {
+      const card = document.getElementById(projId);
+      if (!card) return;
+      
+      const expandedView = card.querySelector('.expanded-view');
+      const viewText = card.querySelector('.view-text');
+      const arrowIcon = card.querySelector('.arrow-icon');
+      
+      const isCurrentlyHidden = expandedView.classList.contains('hidden');
+      
+      if (isCurrentlyHidden) {
+        expandedView.classList.remove('hidden');
+        card.classList.add('expanded');
+        if (viewText) viewText.textContent = 'Hide case';
+        if (arrowIcon) arrowIcon.style.transform = 'rotate(180deg)';
+      } else {
+        expandedView.classList.add('hidden');
+        card.classList.remove('expanded');
+        if (viewText) viewText.textContent = 'View case';
+        if (arrowIcon) arrowIcon.style.transform = 'rotate(0deg)';
+      }
+    }
+    
+    // Add click event listeners - wait for DOM to be ready
+    document.addEventListener('DOMContentLoaded', () => {
+      // Ensure all expanded views start hidden
+      document.querySelectorAll('.expanded-view').forEach(view => {
+        view.classList.add('hidden');
+      });
+      
+      // Attach handlers directly to buttons
+      document.querySelectorAll('.view-details-btn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const card = btn.closest('.experience-card');
+          if (!card) return;
+          
+          const expandedView = card.querySelector('.expanded-view');
+          const viewText = btn.querySelector('.view-text');
+          const arrowIcon = btn.querySelector('.arrow-icon');
+          
+          const isCurrentlyHidden = expandedView.classList.contains('hidden');
+          
+          if (isCurrentlyHidden) {
+            expandedView.classList.remove('hidden');
+            card.classList.add('expanded');
+            if (viewText) viewText.textContent = 'Hide details';
+            if (arrowIcon) arrowIcon.style.transform = 'rotate(180deg)';
+          } else {
+            expandedView.classList.add('hidden');
+            card.classList.remove('expanded');
+            if (viewText) viewText.textContent = 'View details';
+            if (arrowIcon) arrowIcon.style.transform = 'rotate(0deg)';
+          }
+        });
+      });
+      
+      // Photos are managed via edit panel, no upload handlers needed
+      
+      // Resume download functionality
+      document.getElementById('download-resume').addEventListener('click', () => {
+        // Create a simple text-based resume
+        const resumeContent = `
+PREET SADHWANI
+${config.location || defaultConfig.location}
+${config.email || defaultConfig.email}
+${config.linkedin_url || defaultConfig.linkedin_url}
+
+${config.positioning_statement || defaultConfig.positioning_statement}
+
+EXPERIENCE
+
+Project Manager (Graduate Assistant) | APASS — USC | 2024 - Present
+• Managed cross-functional team of 15+ peer mentors
+• Redesigned onboarding process reducing training time by 30%
+• Led data-driven program improvements through student feedback analysis
+
+Product Manager | TMRW House of Brands | 2023
+• Owned product roadmap for two portfolio brands
+• Conducted user research informing feature prioritization
+• Collaborated with engineering and design on rapid iteration cycles
+
+Product Development & Strategy Analyst | WUElev8 | 2022
+• Analyzed market trends to inform product positioning
+• Developed financial models for new product initiatives
+• Supported go-to-market strategy for platform launch
+
+SKILLS
+
+Product & Strategy: Product Roadmapping, A/B Testing, GTM Strategy, Agile Methodologies, Product Analytics
+
+Tools & Technologies: Enginius, Python, Jira, Amplitude, Tableau, SQL, Microsoft Excel, Figma, Git, Github
+
+Business & Operations: Business Analytics, Requirements Gathering, Workflow Optimization, Stakeholder Management, Presentation Skills, Problem Solving
+        `;
+        
+        
+      });
+    });
+    
+    // Apply configuration to UI
+    async function onConfigChange(cfg) {
+      config = { ...defaultConfig, ...cfg };
+      
+      // Update text content
+      document.getElementById('hero-name').textContent = config.hero_name || defaultConfig.hero_name;
+      document.getElementById('hero-subtitle').textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+      document.getElementById('positioning-statement').textContent = config.positioning_statement || defaultConfig.positioning_statement;
+      document.getElementById('location').innerHTML = `
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        ${config.location || defaultConfig.location}
+      `;
+      
+      document.getElementById('closing-message').textContent = config.closing_message || defaultConfig.closing_message;
+      
+      // Update links
+      const linkedinLink = document.getElementById('linkedin-link');
+      linkedinLink.href = config.linkedin_url || defaultConfig.linkedin_url;
+      
+      const emailLink = document.getElementById('email-link');
+      emailLink.href = `mailto:${config.email || defaultConfig.email}`;
+      
+      const contactEmail = document.getElementById('contact-email');
+      contactEmail.href = `mailto:${config.email || defaultConfig.email}`;
+      
+      const contactLinkedin = document.getElementById('contact-linkedin');
+      contactLinkedin.href = config.linkedin_url || defaultConfig.linkedin_url;
+      
+      // Update photos
+      updatePhoto('home-photo-img', 'home-photo-placeholder', config.home_photo_url || defaultConfig.home_photo_url, 'home-photo-container');
+      updatePhoto('journey-photo-1-img', 'journey-photo-1-placeholder', config.journey_photo_1_url || defaultConfig.journey_photo_1_url, 'journey-photo-1-container');
+      updatePhoto('journey-photo-2-img', 'journey-photo-2-placeholder', config.journey_photo_2_url || defaultConfig.journey_photo_2_url, 'journey-photo-2-container');
+      updatePhoto('journey-photo-3-img', 'journey-photo-3-placeholder', config.journey_photo_3_url || defaultConfig.journey_photo_3_url, 'journey-photo-3-container');
+      updatePhoto('journey-photo-4-img', 'journey-photo-4-placeholder', config.journey_photo_4_url || defaultConfig.journey_photo_4_url, 'journey-photo-4-container');
+      
+      // Apply colors
+      document.documentElement.style.setProperty('--color-bg', config.background_color || defaultConfig.background_color);
+      document.documentElement.style.setProperty('--color-text', config.text_color || defaultConfig.text_color);
+      document.documentElement.style.setProperty('--color-accent', config.accent_color || defaultConfig.accent_color);
+      document.documentElement.style.setProperty('--color-skills-band', config.skills_band_color || defaultConfig.skills_band_color);
+      document.documentElement.style.setProperty('--color-block-teal', config.block_teal || defaultConfig.block_teal);
+      document.documentElement.style.setProperty('--color-block-burgundy', config.block_burgundy || defaultConfig.block_burgundy);
+      document.documentElement.style.setProperty('--color-block-navy', config.block_navy || defaultConfig.block_navy);
+      
+      // Apply font family
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      document.querySelectorAll('.font-display').forEach(el => {
+        el.style.fontFamily = `${fontFamily}, Georgia, serif`;
+      });
+      
+      // Apply font size scaling
+      const baseSize = config.font_size || defaultConfig.font_size;
+      document.body.style.fontSize = `${baseSize}px`;
+    }
+    
+    // Map config to capabilities for SDK
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.background_color || defaultConfig.background_color,
+            set: (value) => { cfg.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+          },
+          {
+            get: () => cfg.text_color || defaultConfig.text_color,
+            set: (value) => { cfg.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+          },
+          {
+            get: () => cfg.accent_color || defaultConfig.accent_color,
+            set: (value) => { cfg.accent_color = value; window.elementSdk.setConfig({ accent_color: value }); }
+          },
+          {
+            get: () => cfg.skills_band_color || defaultConfig.skills_band_color,
+            set: (value) => { cfg.skills_band_color = value; window.elementSdk.setConfig({ skills_band_color: value }); }
+          },
+          {
+            get: () => cfg.tint_1 || defaultConfig.tint_1,
+            set: (value) => { cfg.tint_1 = value; window.elementSdk.setConfig({ tint_1: value }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => cfg.font_family || defaultConfig.font_family,
+          set: (value) => { cfg.font_family = value; window.elementSdk.setConfig({ font_family: value }); }
+        },
+        fontSizeable: {
+          get: () => cfg.font_size || defaultConfig.font_size,
+          set: (value) => { cfg.font_size = value; window.elementSdk.setConfig({ font_size: value }); }
+        }
+      };
+    }
+    
+    // Map config to edit panel values
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ['hero_name', cfg.hero_name || defaultConfig.hero_name],
+        ['hero_subtitle', cfg.hero_subtitle || defaultConfig.hero_subtitle],
+        ['positioning_statement', cfg.positioning_statement || defaultConfig.positioning_statement],
+        ['location', cfg.location || defaultConfig.location],
+        ['linkedin_url', cfg.linkedin_url || defaultConfig.linkedin_url],
+        ['email', cfg.email || defaultConfig.email],
+        ['home_photo_url', cfg.home_photo_url || defaultConfig.home_photo_url],
+        ['journey_photo_1_url', cfg.journey_photo_1_url || defaultConfig.journey_photo_1_url],
+        ['journey_photo_2_url', cfg.journey_photo_2_url || defaultConfig.journey_photo_2_url],
+        ['journey_photo_3_url', cfg.journey_photo_3_url || defaultConfig.journey_photo_3_url],
+        ['journey_photo_4_url', cfg.journey_photo_4_url || defaultConfig.journey_photo_4_url],
+        ['closing_message', cfg.closing_message || defaultConfig.closing_message]
+      ]);
+    }
+    
+    // Initialize SDK and wait for it to be ready
+    async function initializeApp() {
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues
+        });
+        // Load saved config from SDK
+        config = { ...defaultConfig, ...window.elementSdk.config };
+        await onConfigChange(config);
+      } else {
+        await onConfigChange(defaultConfig);
+      }
+    }
+    
+    // Start initialization when page loads
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeApp);
+    } else {
+      initializeApp();
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c67ce0f8430498f',t:'MTc2OTg0Nzc4NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
